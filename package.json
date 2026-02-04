@@ -1,0 +1,20 @@
+{
+  "name": "wcwu-personal-site",
+  "version": "1.0.0",
+  "description": "Personal researcher-style website for wcwu",
+  "scripts": {
+    "build": "tsc && node scripts/build.js",
+    "dev": "npm run build && npx http-server -p 8080 -c-1 -o",
+    "watch": "tsc --watch",
+    "new-post": "node scripts/new-post.js"
+  },
+  "dependencies": {
+    "marked": "^11.1.1",
+    "highlight.js": "^11.9.0"
+  },
+  "devDependencies": {
+    "@types/marked": "^6.0.0",
+    "typescript": "^5.3.3",
+    "http-server": "^14.1.1"
+  }
+}
