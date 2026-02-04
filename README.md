@@ -1,5 +1,7 @@
 # Personal Website
 
+> Generated and powered by Cursor
+
 A clean, researcher-style personal website built with TypeScript, HTML, CSS, and JavaScript.
 
 ## 🎉 Quick Start
