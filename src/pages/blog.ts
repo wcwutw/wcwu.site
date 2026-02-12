@@ -99,10 +99,19 @@ export async function renderBlogPost(postId: string): Promise<void> {
             posts.sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
         }
         
-        // Find current post index and get prev/next posts
+        // Find current post index and get prev/next posts (in time order: prev = older, next = newer)
         const currentIndex = posts.findIndex(p => p.id === postId);
-        const prevPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
-        const nextPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
+        let prevPost: (typeof posts)[0] | null;
+        let nextPost: (typeof posts)[0] | null;
+        if (isBaseballPost) {
+            // Ascending by date: index 0 = oldest → prev = index-1 (older), next = index+1 (newer)
+            prevPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
+            nextPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
+        } else {
+            // Descending by date: index 0 = newest → prev = index+1 (older), next = index-1 (newer)
+            prevPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
+            nextPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
+        }
         
         // Extract headings and generate TOC
         const headings = extractHeadings(post.content);
