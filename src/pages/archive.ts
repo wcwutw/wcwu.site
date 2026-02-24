@@ -1,5 +1,6 @@
 // Archive page renderer
 import { getAllPosts } from '../posts.js';
+import { escapeHtml } from '../markdown.js';
 
 export async function renderArchivePage(): Promise<void> {
     const mainContent = document.getElementById('main-content');
@@ -29,14 +30,14 @@ export async function renderArchivePage(): Promise<void> {
                 <div class="archive-item">
                     <span class="archive-date">${formatArchiveDate(post.metadata.date)}</span>
                     <div class="archive-title">
-                        <a href="#blog/${post.id}">${post.metadata.title}</a>
+                        <a href="#blog/${post.id}">${escapeHtml(post.metadata.title)}</a>
                     </div>
                 </div>
             `).join('');
             
             return `
                 <div class="archive-year">
-                    <h3>${year}</h3>
+                    <h3>${escapeHtml(year)}</h3>
                     <div class="archive-list">
                         ${yearPosts}
                     </div>

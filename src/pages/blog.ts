@@ -1,6 +1,6 @@
 // Blog page renderer
 import { getBaseballPosts, getBlogIndexPosts, getPostById, isBaseballPostId } from '../posts.js';
-import { markdownToHtml, getPostExcerpt, extractHeadings, generateTOC, generateHeadingId } from '../markdown.js';
+import { markdownToHtml, getPostExcerpt, extractHeadings, generateTOC, generateHeadingId, escapeHtml } from '../markdown.js';
 import { BASEBALL_SLUG_BY_POST_ID } from './baseball.js';
 
 function parseTitleVisitDate(title: string): Date | null {
@@ -25,13 +25,14 @@ export async function renderBlogPage(): Promise<void> {
         
         const postsHtml = posts.map(post => {
             const excerpt = getPostExcerpt(post.content);
-            const tags = post.metadata.tags ? post.metadata.tags.map(tag => 
-                `<span class="tag">${tag}</span>`
+            const tags = post.metadata.tags ? post.metadata.tags.map(tag =>
+                `<span class="tag">${escapeHtml(tag)}</span>`
             ).join('') : '';
-            const coverImage = post.metadata.cover ? `
+            const safeCover = post.metadata.cover && isSafeUrl(post.metadata.cover) ? post.metadata.cover : '';
+            const coverImage = safeCover ? `
                 <div class="blog-item-cover">
                     <a href="#blog/${post.id}">
-                        <img src="${post.metadata.cover}" alt="${post.metadata.title}">
+                        <img src="${escapeAttr(safeCover)}" alt="${escapeAttr(post.metadata.title)}">
                     </a>
                 </div>
             ` : '';
@@ -40,13 +41,13 @@ export async function renderBlogPage(): Promise<void> {
                 <article class="blog-item">
                     <div class="blog-item-content">
                         <h3 class="blog-item-title">
-                            <a href="#blog/${post.id}">${post.metadata.title}</a>
+                            <a href="#blog/${post.id}">${escapeHtml(post.metadata.title)}</a>
                         </h3>
                         <div class="blog-item-meta">
                             <span class="date">${formatDate(post.metadata.date)}</span>
-                            ${post.metadata.category ? `<span class="category">${post.metadata.category}</span>` : ''}
+                            ${post.metadata.category ? `<span class="category">${escapeHtml(post.metadata.category)}</span>` : ''}
                         </div>
-                        ${post.metadata.description ? `<p class="blog-item-excerpt">${post.metadata.description}</p>` : `<p class="blog-item-excerpt">${excerpt}</p>`}
+                        ${post.metadata.description ? `<p class="blog-item-excerpt">${escapeHtml(post.metadata.description)}</p>` : `<p class="blog-item-excerpt">${escapeHtml(excerpt)}</p>`}
                         ${tags ? `<div class="tags">${tags}</div>` : ''}
                     </div>
                     ${coverImage}
@@ -164,12 +165,13 @@ export async function renderBlogPost(postId: string): Promise<void> {
         
         htmlContent = tempDiv.innerHTML;
         
-        const tags = post.metadata.tags ? post.metadata.tags.map(tag => 
-            `<span class="tag">${tag}</span>`
+        const tags = post.metadata.tags ? post.metadata.tags.map(tag =>
+            `<span class="tag">${escapeHtml(tag)}</span>`
         ).join('') : '';
-        const coverImage = post.metadata.cover ? `
+        const safeCover = post.metadata.cover && isSafeUrl(post.metadata.cover) ? post.metadata.cover : '';
+        const coverImage = safeCover ? `
             <div class="post-cover">
-                <img src="${post.metadata.cover}" alt="${post.metadata.title}">
+                <img src="${escapeAttr(safeCover)}" alt="${escapeAttr(post.metadata.title)}">
             </div>
         ` : '';
         
@@ -183,14 +185,14 @@ export async function renderBlogPost(postId: string): Promise<void> {
         const prevButton = prevPost ? `
             <a href="${isBaseballPost ? baseballHref(prevPost.id) : `#blog/${prevPost.id}`}" class="post-nav-link post-nav-prev">
                 <span class="post-nav-label">← Previous Post</span>
-                <span class="post-nav-title">${prevPost.metadata.title}</span>
+                <span class="post-nav-title">${escapeHtml(prevPost.metadata.title)}</span>
             </a>
         ` : '<div></div>';
         
         const nextButton = nextPost ? `
             <a href="${isBaseballPost ? baseballHref(nextPost.id) : `#blog/${nextPost.id}`}" class="post-nav-link post-nav-next">
                 <span class="post-nav-label">Next Post →</span>
-                <span class="post-nav-title">${nextPost.metadata.title}</span>
+                <span class="post-nav-title">${escapeHtml(nextPost.metadata.title)}</span>
             </a>
         ` : '<div></div>';
 
@@ -207,10 +209,10 @@ export async function renderBlogPost(postId: string): Promise<void> {
                 ` : ''}
                 <article class="blog-post">
                     <header class="post-header">
-                        <h1 class="post-title">${post.metadata.title}</h1>
+                        <h1 class="post-title">${escapeHtml(post.metadata.title)}</h1>
                         <div class="post-meta">
                             <span class="date">${formatDate(post.metadata.date)}</span>
-                            ${post.metadata.category ? ` · <span class="category">${post.metadata.category}</span>` : ''}
+                            ${post.metadata.category ? ` · <span class="category">${escapeHtml(post.metadata.category)}</span>` : ''}
                         </div>
                         ${tags ? `<div class="tags">${tags}</div>` : ''}
                     </header>
@@ -277,11 +279,23 @@ export async function renderBlogPost(postId: string): Promise<void> {
 
 function formatDate(dateString: string): string {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
     });
+}
+
+/** Allow only relative URLs or https: to prevent javascript:/data: XSS. */
+function isSafeUrl(url: string): boolean {
+    const t = url.trim().toLowerCase();
+    return t === '' || t.startsWith('https://') || t.startsWith('./') || t.startsWith('../') || (!t.startsWith('http:') && !t.startsWith('javascript:') && !t.startsWith('data:'));
+}
+
+function escapeAttr(text: string): string {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML.replace(/"/g, '&quot;');
 }
 
 declare const hljs: any;

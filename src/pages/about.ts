@@ -46,7 +46,7 @@ export function renderAboutPage(): void {
                     <h2>Research Roles</h2>
                     <ul>
                         <li>Natural Language Processing Lab, Undergraduate Researcher, <span class="date">Jul 2025 - Present</span></li>
-                        <li>Machine Discovery and Social Network Mining Lab, Undergraduate Researcher, <span class="date">Dec 2024 - Feb 2026</span></li>
+                        <li>Machine Intelligence and Agentic System Lab (aka Machine Discovery and Social Network Mining Lab earlier), Undergraduate Researcher, <span class="date">Dec 2024 - Feb 2026</span></li>
                         <li>Institue of Information Science, Academia Sinica, Research Intern, <span class="date">Jul 2024 – Aug 2024</span></li>
                     </ul>
                     <h2>Work Roles</h2>

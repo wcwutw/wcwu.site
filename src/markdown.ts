@@ -215,7 +215,7 @@ export function generateTOC(headings: Heading[], baseHash?: string): string {
     return tocHtml;
 }
 
-function escapeHtml(text: string): string {
+export function escapeHtml(text: string): string {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
