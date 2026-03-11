@@ -11,8 +11,8 @@ export function renderAboutPage(): void {
                 <div style="flex: 1;">
                     <h2>Bio</h2>
                     <p>I am a junior student from National Taiwan University, majoring in Computer Science and Information Engineering, expected to graduate on June 2027.</p>
-                    <p>I am going to join University of Illinois Urbana-Champaign as an exchange student in Fall 2026 semester.</p>
-                    <p>My research interests focus on natural language processing and large language models, particularly in multilingual LLM reasoning and automatic prompting engineering.</p>
+                    <p>I am going to join University of Illinois Urbana-Champaign as an exchange student in 2026 Fall semester.</p>
+                    <p>My research interests focus on natural language processing and large language models, particularly in multilingual LLM reasoning and LLM bias mitigation. I am mentored by <a href="https://www.csie.ntu.edu.tw/~sdlin/" target="_blank" rel="noopener noreferrer">Prof. Shou-De Lin</a> and <a href="https://nlg.csie.ntu.edu.tw/advisor.php" target="_blank" rel="noopener noreferrer">Prof. Hsin-Hsi Chen</a> in National Taiwan University.</p>
                     <p>I am also a passionate baseball enthusiast who enjoys attending games and following the sport.</p>
                 </div>
                 <div style="flex-shrink: 0;">
