@@ -133,6 +133,19 @@ function getTitleDatePrefix(title: string): string | null {
     return m ? m[1] : null;
 }
 
+function getYearFromDatePrefix(datePrefix: string | null): string {
+    if (!datePrefix) return '';
+    const m = /^(\d{4})/.exec(datePrefix);
+    return m ? m[1] : '';
+}
+
+/** e.g. "2024/6/30" -> "6/30" */
+function getMonthDayFromDatePrefix(datePrefix: string | null): string {
+    if (!datePrefix) return '';
+    const m = /^\d{4}\/(\d{1,2})\/(\d{1,2})/.exec(datePrefix);
+    return m ? `${parseInt(m[1], 10)}/${parseInt(m[2], 10)}` : '';
+}
+
 export async function renderBaseballPage(): Promise<void> {
     const mainContent = document.getElementById('main-content');
     if (!mainContent) return;
@@ -147,25 +160,51 @@ export async function renderBaseballPage(): Promise<void> {
         return a.id.localeCompare(b.id);
     });
 
-    const postsListHtml = baseballPosts
-        .map((post) => {
-            const slug = BASEBALL_SLUG_BY_POST_ID[post.id] ?? post.id;
-            const href = `#baseball/${slug}`;
-            const datePrefix = getTitleDatePrefix(post.metadata.title);
-            const titleRest = datePrefix ? post.metadata.title.replace(datePrefix, '').trim() : post.metadata.title;
-            const description = post.metadata.description ? `<div class="baseball-post-desc">${post.metadata.description}</div>` : '';
+    // Group by year (year shown once on the left, like archive)
+    const postsByYear: Record<string, typeof baseballPosts> = {};
+    baseballPosts.forEach((post) => {
+        const datePrefix = getTitleDatePrefix(post.metadata.title);
+        const year = getYearFromDatePrefix(datePrefix) || '—';
+        if (!postsByYear[year]) postsByYear[year] = [];
+        postsByYear[year].push(post);
+    });
+    const years = Object.keys(postsByYear).sort((a, b) => {
+        if (a === '—' || b === '—') return a === '—' ? 1 : -1;
+        return parseInt(a, 10) - parseInt(b, 10); // oldest first (2018 on top)
+    });
+
+    const tourListHtml = years
+        .map((year) => {
+            const posts = postsByYear[year];
+            const itemsHtml = posts
+                .map((post) => {
+                    const slug = BASEBALL_SLUG_BY_POST_ID[post.id] ?? post.id;
+                    const href = `#baseball/${slug}`;
+                    const datePrefix = getTitleDatePrefix(post.metadata.title);
+                    const monthDay = getMonthDayFromDatePrefix(datePrefix);
+                    const titleRest = datePrefix ? post.metadata.title.replace(datePrefix, '').trim() : post.metadata.title;
+                    const dateLabel = monthDay ? `<span class="baseball-post-date">${monthDay}</span>` : '';
+                    const description = post.metadata.description ? `<div class="baseball-post-desc">${post.metadata.description}</div>` : '';
+                    return `
+                        <li class="baseball-post-item">
+                            <a class="baseball-post-link" href="${href}">
+                                ${dateLabel}
+                                <span class="baseball-post-title">${titleRest}</span>
+                            </a>
+                            ${description}
+                        </li>
+                    `;
+                })
+                .join('');
             return `
-                <li class="baseball-post-item">
-                    <a class="baseball-post-link" href="${href}">
-                        ${datePrefix ? `<span class="baseball-post-date">${datePrefix}</span>` : ''}
-                        <span class="baseball-post-title">${titleRest}</span>
-                    </a>
-                    ${description}
-                </li>
+                <div class="baseball-year-block">
+                    <div class="baseball-year-header">${year}</div>
+                    <ul class="baseball-year-posts">${itemsHtml}</ul>
+                </div>
             `;
         })
         .join('');
-    
+
     mainContent.innerHTML = `
         <div class="baseball-content">
             <h1>30 MLB Stadium Tour Maps</h1>
@@ -199,9 +238,9 @@ export async function renderBaseballPage(): Promise<void> {
             </div>
             <div class="baseball-posts-section">
                 <h2>Baseball Tour Lists</h2>
-                <ul class="baseball-post-list">
-                    ${postsListHtml || '<li class="baseball-post-item">No baseball posts yet.</li>'}
-                </ul>
+                <div class="baseball-tour-timeline">
+                    ${tourListHtml || '<p class="baseball-tour-empty">No baseball posts yet.</p>'}
+                </div>
             </div>
         </div>
     `;

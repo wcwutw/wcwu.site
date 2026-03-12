@@ -53,6 +53,7 @@ export function renderAboutPage(): void {
                     <ul>
                         <li>Network Administration Team, DNS Group Chief, <span class="date">Oct 2024 - Present</span></li>
                         <li>Sprout Project Program C++ Class, Lecturer and Project Manager, <span class="date">Nov 2023 - Present</span></li>
+                        <li>Data Structure and Algorithm, Judge Admin, <span class="date">Feb 2026 - Present</span></li>
                         <li>Data Structure and Algorithm, Teaching Assistant, <span class="date">Feb 2025 - Jun 2025</span></li>
                         <li>Algorithm Design and Analysis, Teaching Assistant, <span class="date">Nov 2024 - Jan 2025</span></li>
                         <li>IOICamp 2026 Worker</li>
