@@ -18,7 +18,7 @@ export function renderHomePage(): void {
                 <div class="about-me-left">
                     <div class="section-content">
                         <p>I'm a student from National Taiwan University, majoring in Computer Science and Information Engineering.</p>
-                        <p><strong>Research Interests:</strong> Natural Language Processing, Machine Learning, and Deep Learning.</p>
+                        <p><strong>Research Interests:</strong> Natural Language Processing, Artificial Intelligence, and Deep Learning.</p>
                         <p><strong>Affiliate Lab:</strong> Machine Discovery and Social Network Mining Lab, National Taiwan University; Natural Language Processing Lab, National Taiwan University.</p>
                     </div>
                     <div class="social-links">
@@ -40,7 +40,7 @@ export function renderHomePage(): void {
                     </svg>
                     <span>Email</span>
                 </a>
-                <a href="../../assets/documents/MyCV_20260108.pdf" target="_blank" rel="noopener" aria-label="Resume" class="social-link">
+                <a href="../../assets/documents/Wu_WeiChi_Resume_2603.pdf" target="_blank" rel="noopener" aria-label="Resume" class="social-link">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                     </svg>
@@ -64,7 +64,7 @@ export function renderHomePage(): void {
         <div class="section">
             <h2>Recent Updates</h2>
             <div class="section-content">
-                <p>I have rebuilt my blog and reorganized all the posts. The website was built using vibe coding. I have also removed posts about high school programming contests.</p>
+                <p>I have rebuilt my blog and reorganized all the posts. The website was built using vibe coding.</p>
             </div>
         </div>
     `;
