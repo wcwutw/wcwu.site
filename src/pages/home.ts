@@ -4,6 +4,84 @@ export function renderHomePage(): void {
     if (!mainContent) return;
     
     mainContent.innerHTML = `
+        <style>
+            .pub-intro {
+                margin-bottom: 1rem;
+                opacity: 0.9;
+            }
+            .pub-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0.9rem;
+            }
+            .pub-item {
+                display: flex;
+                gap: 0.9rem;
+                align-items: flex-start;
+                padding: 0.9rem;
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                border-radius: 10px;
+                background: rgba(255, 255, 255, 0.02);
+            }
+            .pub-venue {
+                min-width: 72px;
+                text-align: center;
+                font-weight: 700;
+                font-size: 0.8rem;
+                letter-spacing: 0.04em;
+                color: #0d2332;
+                background: #7ec7f4;
+                border-radius: 6px;
+                padding: 0.2rem 0.45rem;
+                line-height: 1.4;
+            }
+            .pub-body {
+                flex: 1;
+            }
+            .pub-title {
+                margin: 0 0 0.35rem 0;
+                font-size: 1.1rem;
+                font-weight: 700;
+                line-height: 1.4;
+            }
+            .pub-authors {
+                margin: 0 0 0.25rem 0;
+                opacity: 0.92;
+            }
+            .pub-meta {
+                margin: 0;
+                opacity: 0.86;
+            }
+            .news-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0.65rem;
+            }
+            .news-item {
+                display: grid;
+                grid-template-columns: 165px 1fr;
+                gap: 0.9rem;
+                align-items: start;
+            }
+            .news-date {
+                font-weight: 700;
+                letter-spacing: 0.02em;
+                white-space: nowrap;
+            }
+            @media (max-width: 700px) {
+                .pub-item {
+                    flex-direction: column;
+                }
+                .pub-venue {
+                    min-width: 0;
+                    width: fit-content;
+                }
+                .news-item {
+                    grid-template-columns: 1fr;
+                    gap: 0.2rem;
+                }
+            }
+        </style>
         <div class="hero">
             <h1>wcwu</h1>
             <p class="subtitle">Junior @ NTU CSIE</p>
@@ -55,16 +133,34 @@ export function renderHomePage(): void {
         </div>
         
         <div class="section">
-            <h2>Status</h2>
+            <h2>Selected Publications</h2>
             <div class="section-content">
-                <p>Preparing for the exchange program at UIUC. Also looking forward to finding mentors at UIUC.</p>
+                <div class="pub-list">
+                    <article class="pub-item">
+                        <div class="pub-venue">ACL</div>
+                        <div class="pub-body">
+                            <p class="pub-title">No One Fits All: From Fixed Prompting to Learned Routing in Multilingual LLMs</p>
+                            <p class="pub-authors"><em>Wei-Chi Wu</em>, Sheng-Lun Wei, Hen-Hsen Huang, Hsin-Hsi Chen</p>
+                            <p class="pub-meta"><em>Findings of ACL</em>, 2026</p>
+                        </div>
+                    </article>
+                </div>
             </div>
         </div>
 
         <div class="section">
-            <h2>Recent Updates</h2>
+            <h2>News</h2>
             <div class="section-content">
-                <p>I have rebuilt my blog and reorganized all the posts. The website was built using vibe coding.</p>
+                <div class="news-list">
+                    <div class="news-item">
+                        <div class="news-date">Apr 7, 2026</div>
+                        <div>One paper has been accepted to ACL 2026 Findings.</div>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-date">Jan 18, 2026</div>
+                        <div>This personal website has been rebuilt and all posts have been reorganized.</div>
+                    </div>
+                </div>
             </div>
         </div>
     `;
