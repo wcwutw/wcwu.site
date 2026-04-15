@@ -1,3 +1,39 @@
+interface PubEntry {
+    venue: string;
+    title: string;
+    authors: string;
+    meta: string;
+    abstract?: string;
+    links: { label: string; url: string }[];
+}
+
+function renderPub(entry: PubEntry, id: number): string {
+    const hasAbstract = !!entry.abstract?.trim();
+    const abstractBtn = hasAbstract
+        ? `<button class="pub-link-btn pub-abstract-btn" data-target="pub-abstract-${id}" aria-expanded="false">Abstract</button>`
+        : '';
+    const urlBtns = entry.links
+        .filter(l => l.url.trim() !== '')
+        .map(l => `<a href="${l.url}" target="_blank" rel="noopener" class="pub-link-btn">${l.label}</a>`)
+        .join('');
+    const hasButtons = hasAbstract || urlBtns !== '';
+    const linksDiv = hasButtons ? `<div class="pub-links">${abstractBtn}${urlBtns}</div>` : '';
+    const abstractBlock = hasAbstract
+        ? `<div class="pub-abstract" id="pub-abstract-${id}" hidden>${entry.abstract}</div>`
+        : '';
+    return `
+        <article class="pub-item">
+            <div class="pub-venue">${entry.venue}</div>
+            <div class="pub-body">
+                <p class="pub-title">${entry.title}</p>
+                <p class="pub-authors">${entry.authors}</p>
+                <p class="pub-meta">${entry.meta}</p>
+                ${linksDiv}
+                ${abstractBlock}
+            </div>
+        </article>`;
+}
+
 // Home page renderer
 export function renderHomePage(): void {
     const mainContent = document.getElementById('main-content');
@@ -22,6 +58,10 @@ export function renderHomePage(): void {
                 border: 1px solid rgba(255, 255, 255, 0.14);
                 border-radius: 10px;
                 background: rgba(255, 255, 255, 0.02);
+            }
+            html:not([data-theme="dark"]) .pub-item {
+                border-color: #1a1a1a;
+                background: transparent;
             }
             .pub-venue {
                 min-width: 72px;
@@ -51,6 +91,60 @@ export function renderHomePage(): void {
             .pub-meta {
                 margin: 0;
                 opacity: 0.86;
+            }
+            .pub-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.4rem;
+                margin-top: 0.55rem;
+            }
+            .pub-link-btn {
+                display: inline-block;
+                padding: 0.18rem 0.6rem;
+                font-size: 0.78rem;
+                font-weight: 600;
+                letter-spacing: 0.03em;
+                border: 1px solid rgba(126, 199, 244, 0.55);
+                border-radius: 4px;
+                color: #7ec7f4;
+                text-decoration: none;
+                background: transparent;
+                cursor: pointer;
+                transition: background 0.15s, color 0.15s;
+                line-height: 1.6;
+            }
+            .pub-link-btn:hover {
+                background: #7ec7f4;
+                color: #0d2332;
+                text-decoration: none;
+            }
+            .pub-link-btn.active {
+                background: rgba(126, 199, 244, 0.18);
+            }
+            html:not([data-theme="dark"]) .pub-link-btn {
+                border-color: #0055aa;
+                color: #0055aa;
+            }
+            html:not([data-theme="dark"]) .pub-link-btn:hover {
+                background: #0055aa;
+                color: #ffffff;
+            }
+            html:not([data-theme="dark"]) .pub-link-btn.active {
+                background: rgba(0, 85, 170, 0.1);
+            }
+            .pub-abstract {
+                margin-top: 0.65rem;
+                padding: 0.7rem 0.9rem;
+                border-left: 3px solid rgba(126, 199, 244, 0.45);
+                background: rgba(126, 199, 244, 0.06);
+                border-radius: 0 6px 6px 0;
+                font-size: 0.92rem;
+                line-height: 1.65;
+                opacity: 0.92;
+            }
+            html:not([data-theme="dark"]) .pub-abstract {
+                border-left-color: rgba(0, 85, 170, 0.45);
+                background: rgba(0, 85, 170, 0.05);
             }
             .news-list {
                 display: flex;
@@ -136,14 +230,18 @@ export function renderHomePage(): void {
             <h2>Selected Publications</h2>
             <div class="section-content">
                 <div class="pub-list">
-                    <article class="pub-item">
-                        <div class="pub-venue">ACL</div>
-                        <div class="pub-body">
-                            <p class="pub-title">No One Fits All: From Fixed Prompting to Learned Routing in Multilingual LLMs</p>
-                            <p class="pub-authors"><em>Wei-Chi Wu</em>, Sheng-Lun Wei, Hen-Hsen Huang, Hsin-Hsi Chen</p>
-                            <p class="pub-meta"><em>Findings of ACL</em>, 2026</p>
-                        </div>
-                    </article>
+                    ${renderPub({
+                        venue: 'ACL',
+                        title: 'No One Fits All: From Fixed Prompting to Learned Routing in Multilingual LLMs',
+                        authors: '<em>Wei-Chi Wu</em>, Sheng-Lun Wei, Hen-Hsen Huang, Hsin-Hsi Chen',
+                        meta: '<em>Findings of The 64th Annual Meeting of the Association for Computational Linguistics</em>, 2026',
+                        abstract: 'Translation-based prompting is widely used in multilingual LLMs, yet its effectiveness varies across languages and tasks. Evaluating prompting strategies across ten languages of different resource levels and multiple benchmarks, we show that no single strategy is universally optimal: translation strongly benefits low-resource languages despite imperfect translation quality, while prompt-based self-routing fails. We formulate prompting strategy selection as a learned decision problem and introduce lightweight classifiers that predict whether native or translation-based prompting is optimal for each instance, achieving statistically significant improvements over fixed strategies across four benchmarks, including unseen task formats. Further analysis shows that language resource level, rather than translation quality, determines when translation is beneficial.',
+                        links: [
+                            { label: 'PDF',  url: '' },
+                            { label: 'Code', url: '' },
+                            { label: 'Blog', url: '' },
+                        ],
+                    }, 0)}
                 </div>
             </div>
         </div>
@@ -164,4 +262,15 @@ export function renderHomePage(): void {
             </div>
         </div>
     `;
+
+    mainContent.querySelectorAll<HTMLButtonElement>('.pub-abstract-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const block = document.getElementById(btn.dataset.target!);
+            if (!block) return;
+            const opening = block.hasAttribute('hidden');
+            block.toggleAttribute('hidden', !opening);
+            btn.setAttribute('aria-expanded', String(opening));
+            btn.classList.toggle('active', opening);
+        });
+    });
 }
