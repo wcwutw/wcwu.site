@@ -206,11 +206,11 @@ export function renderHomePage(): void {
                     </svg>
                     <span>LinkedIn</span>
                 </a>
-                <a href="mailto:b12902080@csie.ntu.edu.tw" aria-label="Email" class="social-link">
+                <a href="https://scholar.google.com/citations?user=wQNSZ7UAAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar" class="social-link">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 10a8 8 0 0 1 7.162 3.44L24 9.5z"/>
                     </svg>
-                    <span>Email</span>
+                    <span>Scholar</span>
                 </a>
                 <a href="../../assets/documents/Wu_WeiChi_Resume_2604.pdf" target="_blank" rel="noopener" aria-label="Resume" class="social-link">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
