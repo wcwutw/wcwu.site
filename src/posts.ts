@@ -9,6 +9,7 @@ const BLOG_INDEX_FILES = [
     '13_2024_SpringSemester.md',
     '14_2024_FallSemester.md',
     '15_2025_SpringSemester.md',
+    '24_RoadToFirstPublication.md',
 ];
 
 // Baseball travel posts (clickable from Baseball page, but NOT listed in Blog/Archive)
