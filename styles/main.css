@@ -371,6 +371,12 @@ main {
     max-width: 800px;
 }
 
+.blog-post-container > .blog-post:only-child {
+    flex: 0 1 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .post-sidebar {
     width: 280px;
     flex-shrink: 0;

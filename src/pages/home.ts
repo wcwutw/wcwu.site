@@ -238,6 +238,7 @@ export function renderHomePage(): void {
                         abstract: 'Translation-based prompting is widely used in multilingual LLMs, yet its effectiveness varies across languages and tasks. We evaluate prompting strategies across ten languages of different resource levels and four benchmarks. Our analysis shows that no single strategy is universally optimal. Translation strongly benefits low-resource languages even when translation quality is imperfect, high-resource languages gain little, and prompt-based self-routing underperforms explicit translation. Motivated by these findings, we formulate prompting strategy selection as a learned decision problem and introduce lightweight classifiers that predict whether native or translation-based prompting is optimal for each instance. The classifiers achieve statistically significant improvements over fixed strategies across four benchmarks and generalize to unseen task formats not observed during training. Further analysis reveals that language resource level, rather than translation quality alone, determines when translation is beneficial.',
                         links: [
                             { label: 'PDF',  url: 'https://arxiv.org/pdf/2604.16937' },
+                            { label: 'Poster', url: '../../assets/documents/ACL_2026_Find-5721.pdf' },
                             { label: 'Code', url: '' },
                             { label: 'Blog', url: '' },
                         ],
