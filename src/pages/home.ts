@@ -178,9 +178,9 @@ export function renderHomePage(): void {
         </style>
         <div class="hero">
             <h1>wcwu</h1>
-            <p class="subtitle">Junior @ NTU CSIE</p>
+            <p class="subtitle">Senior @ NTU CSIE</p>
             <div class="bio">
-                <p>I am Wei-Chi "Alex" Wu ("wcwu"), a junior from National Taiwan University, majoring in Computer Science.</p>
+                <p>I am Wei-Chi "Alex" Wu ("wcwu"), a senior from National Taiwan University, majoring in Computer Science.</p>
             </div>
         </div>
         
@@ -191,7 +191,7 @@ export function renderHomePage(): void {
                     <div class="section-content">
                         <p>I'm a student from National Taiwan University, majoring in Computer Science and Information Engineering.</p>
                         <p><strong>Research Interests:</strong> Natural Language Processing, Artificial Intelligence, and Deep Learning.</p>
-                        <p><strong>Affiliate Lab:</strong> Machine Discovery and Social Network Mining Lab, National Taiwan University; Natural Language Processing Lab, National Taiwan University.</p>
+                        <p><strong>Undergraduate Researcher @</strong> Natural Language Processing Lab, National Taiwan University; iDEA-iSAIL Lab, University of Illinois at Urbana-Champaign.</p>
                     </div>
                     <div class="social-links">
                 <a href="https://github.com/wcwutw" target="_blank" rel="noopener" aria-label="GitHub" class="social-link">
@@ -251,6 +251,10 @@ export function renderHomePage(): void {
             <h2>News</h2>
             <div class="section-content">
                 <div class="news-list">
+                    <div class="news-item">
+                        <div class="news-date">Jul 2, 2026</div>
+                        <div>I will be participating in ACL 2026 at San Diego, California, USA.</div>
+                    </div>
                     <div class="news-item">
                         <div class="news-date">Apr 7, 2026</div>
                         <div>One paper has been accepted to ACL 2026 Findings.</div>
