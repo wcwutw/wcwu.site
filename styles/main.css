@@ -121,9 +121,9 @@ main {
 /* Home Page */
 .hero {
     padding: 4rem 2rem;
-    background-image: url('../assets/images/DSCF8041.JPG');
+    background-image: url('../assets/images/PXL_20260706_005535086.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: center 22%;
     background-repeat: no-repeat;
     border-radius: 8px;
     position: relative;
@@ -960,6 +960,8 @@ html {
     font-variant-numeric: tabular-nums;
     font-size: 0.9rem;
     color: var(--text-secondary);
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .baseball-post-title {
@@ -1047,8 +1049,22 @@ html {
     filter: grayscale(1) brightness(0.75);
 }
 
+/* Keep light pills in dark mode — team SVGs are mostly “cap on light” logos
+   (e.g. Padres #2f241d), so a dark pill makes visited marks look unlit. */
 [data-theme="dark"] .team-icon {
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(20, 20, 20, 0.85);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .team-icon.visited {
+    border-color: rgba(255, 255, 255, 0.55);
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.22),
+        0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .team-icon.unvisited {
+    opacity: 0.55;
+    filter: grayscale(1) brightness(0.7);
 }

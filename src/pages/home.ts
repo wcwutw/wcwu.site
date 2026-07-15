@@ -221,7 +221,7 @@ export function renderHomePage(): void {
                     </div>
                 </div>
                 <div class="about-me-image">
-                    <img src="../../assets/images/_MG_9793.JPG" alt="About Me" />
+                    <img src="../../assets/images/IMG_5562.jpg" alt="About Me" />
                 </div>
             </div>
         </div>

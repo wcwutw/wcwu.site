@@ -34,6 +34,7 @@ export const BASEBALL_POST_BY_SLUG: Record<string, string> = {
     nats: '21_2024_Nats',
     orioles: '22_2024_Orioles',
     phillies: '23_2024_Phillies',
+    padres: '25_2026_Padres',
 
     // KBO (still part of your Baseball section)
     // twins: '18_2025_KBOTwins',
@@ -54,6 +55,7 @@ const BASEBALL_PRIMARY_SLUG_BY_MLB_ID: Record<number, string> = {
     110: 'orioles',
     136: 'mariners-0',
     143: 'phillies',
+    135: 'padres',
 };
 
 /**
@@ -119,6 +121,7 @@ function latLonToPercent(lat: number, lon: number): { xPct: number; yPct: number
 }
 
 function parseTitleVisitDate(title: string): Date | null {
+    // Sort by the first day of a range (e.g. "2026/7/7-8" -> Jul 7)
     const m = /^(\d{4})\/(\d{1,2})\/(\d{1,2})/.exec(title.trim());
     if (!m) return null;
     const year = Number(m[1]);
@@ -128,8 +131,12 @@ function parseTitleVisitDate(title: string): Date | null {
     return new Date(year, month - 1, day);
 }
 
+/**
+ * Leading date in a baseball title.
+ * Supports single days ("2024/6/30") and multi-day ranges ("2026/7/7-8", "2026/7/7-7/8").
+ */
 function getTitleDatePrefix(title: string): string | null {
-    const m = /^(\d{4}\/\d{1,2}\/\d{1,2})/.exec(title.trim());
+    const m = /^(\d{4}\/\d{1,2}\/\d{1,2}(?:-(?:\d{1,2}\/)?\d{1,2})?)/.exec(title.trim());
     return m ? m[1] : null;
 }
 
@@ -139,11 +146,18 @@ function getYearFromDatePrefix(datePrefix: string | null): string {
     return m ? m[1] : '';
 }
 
-/** e.g. "2024/6/30" -> "6/30" */
+/** e.g. "2024/6/30" -> "6/30", "2026/7/7-8" -> "7/7-8" */
 function getMonthDayFromDatePrefix(datePrefix: string | null): string {
     if (!datePrefix) return '';
-    const m = /^\d{4}\/(\d{1,2})\/(\d{1,2})/.exec(datePrefix);
-    return m ? `${parseInt(m[1], 10)}/${parseInt(m[2], 10)}` : '';
+    const m = /^\d{4}\/(\d{1,2})\/(\d{1,2})(?:-((?:\d{1,2}\/)?\d{1,2}))?/.exec(datePrefix);
+    if (!m) return '';
+    const start = `${parseInt(m[1], 10)}/${parseInt(m[2], 10)}`;
+    if (!m[3]) return start;
+    if (m[3].includes('/')) {
+        const [mm, dd] = m[3].split('/');
+        return `${start}-${parseInt(mm, 10)}/${parseInt(dd, 10)}`;
+    }
+    return `${start}-${parseInt(m[3], 10)}`;
 }
 
 export async function renderBaseballPage(): Promise<void> {
