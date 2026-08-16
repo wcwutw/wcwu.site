@@ -11,7 +11,7 @@ export function renderAboutPage(): void {
                 <div style="flex: 1;">
                     <h2>Bio</h2>
                     <p>I am a senior student from National Taiwan University, majoring in Computer Science and Information Engineering, expected to graduate on June 2027.</p>
-                    <p>I am going to join University of Illinois Urbana-Champaign as an exchange student in 2026 Fall semester.</p>
+                    <p>I am an exchange student at University of Illinois Urbana Champaign.</p>
                     <p>My research interests focus on natural language processing and large language models, particularly in multilingual LLM, LLM reasoning and LLM bias mitigation. I am advised by <a href="https://www.csie.ntu.edu.tw/~sdlin/" target="_blank" rel="noopener noreferrer">Prof. Shou-De Lin</a> and <a href="https://nlg.csie.ntu.edu.tw/advisor.php" target="_blank" rel="noopener noreferrer">Prof. Hsin-Hsi Chen</a> in National Taiwan University.</p>
                     <p>I am also a passionate baseball enthusiast who enjoys attending games and following the sport.</p>
                 </div>
@@ -24,6 +24,7 @@ export function renderAboutPage(): void {
                 <div>
                     <h2>Awards & Achievements</h2>
                     <ul>
+                        <li>Outstanding Student Conference Award Scholarship, <span class="date">Jul 2026</span></li>
                         <li>NTU Academic Achievement Award, <span class="date">Spring 2025</span></li>
                         <li>ICPC Taoyuan - Bronze (Rk. 34), <span class="date">Oct 2023</span></li>
                         <li>NHSPC - Third Prize (Rk. 19), <span class="date">Dec 2022</span></li>

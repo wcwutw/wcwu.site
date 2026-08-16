@@ -189,9 +189,9 @@ export function renderHomePage(): void {
             <div class="about-me-container">
                 <div class="about-me-left">
                     <div class="section-content">
-                        <p>I'm a student from National Taiwan University, majoring in Computer Science and Information Engineering.</p>
+                        <p>I'm a student from National Taiwan University, majoring in Computer Science and Information Engineering. Currently, I am an exchange student at the University of Illinois Urbana Champaign.</p>
                         <p><strong>Research Interests:</strong> Natural Language Processing, Artificial Intelligence, and Deep Learning.</p>
-                        <p><strong>Undergraduate Researcher @</strong> Natural Language Processing Lab, National Taiwan University; iDEA-iSAIL Lab, University of Illinois at Urbana-Champaign.</p>
+                        <p><strong>Undergraduate Researcher @</strong> Natural Language Processing Lab, National Taiwan University; iDEA-iSAIL Lab, University of Illinois Urbana Champaign.</p>
                     </div>
                     <div class="social-links">
                 <a href="https://github.com/wcwutw" target="_blank" rel="noopener" aria-label="GitHub" class="social-link">
@@ -233,12 +233,25 @@ export function renderHomePage(): void {
                     ${renderPub({
                         venue: 'ACL',
                         title: 'No One Fits All: From Fixed Prompting to Learned Routing in Multilingual LLMs',
-                        authors: '<em>Wei-Chi Wu</em>, Sheng-Lun Wei, Hen-Hsen Huang, Hsin-Hsi Chen',
+                        authors: '<em><strong>Wei-Chi Wu</strong></em>, Sheng-Lun Wei, Hen-Hsen Huang, Hsin-Hsi Chen',
                         meta: '<em>Findings of The 64th Annual Meeting of the Association for Computational Linguistics</em>, 2026',
                         abstract: 'Translation-based prompting is widely used in multilingual LLMs, yet its effectiveness varies across languages and tasks. We evaluate prompting strategies across ten languages of different resource levels and four benchmarks. Our analysis shows that no single strategy is universally optimal. Translation strongly benefits low-resource languages even when translation quality is imperfect, high-resource languages gain little, and prompt-based self-routing underperforms explicit translation. Motivated by these findings, we formulate prompting strategy selection as a learned decision problem and introduce lightweight classifiers that predict whether native or translation-based prompting is optimal for each instance. The classifiers achieve statistically significant improvements over fixed strategies across four benchmarks and generalize to unseen task formats not observed during training. Further analysis reveals that language resource level, rather than translation quality alone, determines when translation is beneficial.',
                         links: [
                             { label: 'PDF',  url: 'https://arxiv.org/pdf/2604.16937' },
                             { label: 'Poster', url: '../../assets/documents/ACL_2026_Find-5721.pdf' },
+                            { label: 'Code', url: '' },
+                            { label: 'Blog', url: '' },
+                        ],
+                    }, 1)}
+                    ${renderPub({
+                        venue: 'TAAI',
+                        title: 'GAIA-Ext: Benchmarking AI Agent Overfitting with a Problem-Level Aligned Dataset',
+                        authors: 'Yun-Ang Wu, Chun-Pai Yang, <em><strong>Wei-Chi Wu</strong></em>, Wei-Hsuan Li, Yi-Chung Chang, Chi-Wei Wu, Kan Zheng, Shou-De Lin',
+                        meta: '<em>Best Paper Award, The 30th International Conference on Technologies and Applications of Artificial Intelligence</em>, 2025',
+                        abstract: 'Recent advances in large language models have empowered AI agents with sophisticated reasoning, planning, and tool-use abilities. However, in real-world deployments, AI agents often require adaptation to specific domains or user contexts. This adaptation increases the risk of overfitting to training samples and reduces the ability to generalize to related but unseen problems. Existing benchmarks do not provide sufficient evaluation of problem-level generalization, since they typically lack systematically constructed and structurally aligned test variants for each validation query. To address this gap, we introduce GAIA-Ext, a new benchmark that extends the famous GAIA benchmark dataset by associating each original task with multiple problem-level aligned variants. This design enables principled assessment of agent generalization beyond observed examples. We present a construction methodology that uses human expertise to generate two test-time variants, named “close” and “far”, for each problem, capturing a range of generalization challenges. Our empirical studies demonstrate that GAIA-Ext supports robust diagnosis of overfitting and exposes limitations in current agent adaptation strategies. To encourage further research on robust and adaptable AI agents, we plan to release the GAIA-Ext dataset to the public community.',
+                        links: [
+                            { label: 'PDF', url: '' },
+                            { label: 'Poster', url: '' },
                             { label: 'Code', url: '' },
                             { label: 'Blog', url: '' },
                         ],
@@ -251,6 +264,10 @@ export function renderHomePage(): void {
             <h2>News</h2>
             <div class="section-content">
                 <div class="news-list">
+                    <div class="news-item">
+                        <div class="news-date">Aug 15, 2026</div>
+                        <div>I am starting my exchange program at the Grainger College of Engineering, University of Illinois Urbana Champaign.</div>
+                    </div>
                     <div class="news-item">
                         <div class="news-date">Jul 2, 2026</div>
                         <div>I will be participating in ACL 2026 at San Diego, California, USA.</div>
