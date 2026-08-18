@@ -25,9 +25,7 @@ export async function renderBlogPage(): Promise<void> {
         
         const postsHtml = posts.map(post => {
             const excerpt = getPostExcerpt(post.content);
-            const tags = post.metadata.tags ? post.metadata.tags.map(tag =>
-                `<span class="tag">${escapeHtml(tag)}</span>`
-            ).join('') : '';
+            const tagsMeta = formatTagsMeta(post.metadata.tags);
             const safeCover = post.metadata.cover && isSafeUrl(post.metadata.cover) ? post.metadata.cover : '';
             const coverImage = safeCover ? `
                 <div class="blog-item-cover">
@@ -45,10 +43,9 @@ export async function renderBlogPage(): Promise<void> {
                         </h3>
                         <div class="blog-item-meta">
                             <span class="date">${formatDate(post.metadata.date)}</span>
-                            ${post.metadata.category ? `<span class="category">${escapeHtml(post.metadata.category)}</span>` : ''}
+                            ${tagsMeta ? `<span class="category">${tagsMeta}</span>` : ''}
                         </div>
                         ${post.metadata.description ? `<p class="blog-item-excerpt">${escapeHtml(post.metadata.description)}</p>` : `<p class="blog-item-excerpt">${escapeHtml(excerpt)}</p>`}
-                        ${tags ? `<div class="tags">${tags}</div>` : ''}
                     </div>
                     ${coverImage}
                 </article>
@@ -165,9 +162,7 @@ export async function renderBlogPost(postId: string): Promise<void> {
         
         htmlContent = tempDiv.innerHTML;
         
-        const tags = post.metadata.tags ? post.metadata.tags.map(tag =>
-            `<span class="tag">${escapeHtml(tag)}</span>`
-        ).join('') : '';
+        const tagsMeta = formatTagsMeta(post.metadata.tags);
         const safeCover = post.metadata.cover && isSafeUrl(post.metadata.cover) ? post.metadata.cover : '';
         const coverImage = safeCover ? `
             <div class="post-cover">
@@ -212,9 +207,8 @@ export async function renderBlogPost(postId: string): Promise<void> {
                         <h1 class="post-title">${escapeHtml(post.metadata.title)}</h1>
                         <div class="post-meta">
                             <span class="date">${formatDate(post.metadata.date)}</span>
-                            ${post.metadata.category ? ` · <span class="category">${escapeHtml(post.metadata.category)}</span>` : ''}
+                            ${tagsMeta ? ` · <span class="category">${tagsMeta}</span>` : ''}
                         </div>
-                        ${tags ? `<div class="tags">${tags}</div>` : ''}
                     </header>
                     <nav class="post-navigation post-navigation-top">
                         ${prevButton}
@@ -284,6 +278,11 @@ function formatDate(dateString: string): string {
         month: 'long',
         day: 'numeric'
     });
+}
+
+function formatTagsMeta(tags?: string[]): string {
+    if (!tags?.length) return '';
+    return tags.map(tag => escapeHtml(tag)).join(', ');
 }
 
 /** Allow only relative URLs or https: to prevent javascript:/data: XSS. */
