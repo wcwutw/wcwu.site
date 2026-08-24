@@ -35,6 +35,7 @@ export const BASEBALL_POST_BY_SLUG: Record<string, string> = {
     orioles: '22_2024_Orioles',
     phillies: '23_2024_Phillies',
     padres: '25_2026_Padres',
+    royals: '26_2026_Royals',
 
     // KBO (still part of your Baseball section)
     // twins: '18_2025_KBOTwins',
@@ -56,6 +57,7 @@ const BASEBALL_PRIMARY_SLUG_BY_MLB_ID: Record<number, string> = {
     136: 'mariners-0',
     143: 'phillies',
     135: 'padres',
+    118: 'royals',
 };
 
 /**
@@ -251,7 +253,7 @@ export async function renderBaseballPage(): Promise<void> {
                 </div>
             </div>
             <div class="baseball-posts-section">
-                <h2>Baseball Tour Lists</h2>
+                <h2>Stadium Chases</h2>
                 <div class="baseball-tour-timeline">
                     ${tourListHtml || '<p class="baseball-tour-empty">No baseball posts yet.</p>'}
                 </div>

@@ -6,6 +6,7 @@ import { renderArchivePage } from './pages/archive.js';
 import { BASEBALL_POST_BY_SLUG, renderBaseballPage } from './pages/baseball.js';
 import { isBaseballPostId } from './posts.js';
 import { isRouteAccessible } from './devSections.js';
+import { scrollToHeadingWhenReady } from './scrollToHeading.js';
 
 export interface Route {
     path: string;
@@ -59,15 +60,26 @@ class Router {
             return;
         }
 
-        const scrollToHeading = (id: string, behavior: ScrollBehavior) => {
-            const element = document.getElementById(id);
-            if (!element) return;
-            // Keep headings visible below the fixed navbar
-            const navbarHeight = 80;
-            const elementTop = element.getBoundingClientRect().top + window.scrollY;
-            const targetTop = Math.max(0, elementTop - navbarHeight);
-            window.scrollTo({ top: targetTop, behavior });
+        const scrollToAnchor = (behavior: ScrollBehavior = 'auto') => {
+            if (!anchorId) return Promise.resolve();
+            return scrollToHeadingWhenReady(anchorId, { finalBehavior: behavior });
         };
+
+        const isBlogPostRoute = routePath.startsWith('blog/') || routePath.startsWith('baseball/');
+        const currentRoutePath = (window.location.hash.slice(1) || 'home').split('?')[0];
+        const isSamePostAnchorOnly =
+            !!anchorId &&
+            isBlogPostRoute &&
+            currentRoutePath === routePath &&
+            !!this.mainContent?.querySelector('.blog-post');
+
+        if (isSamePostAnchorOnly) {
+            if (updateHistory) {
+                window.history.pushState({}, '', `#${routePath}?h=${encodeURIComponent(anchorId)}`);
+            }
+            await scrollToAnchor('smooth');
+            return;
+        }
 
         // Check if it's a blog post
         if (routePath.startsWith('blog/')) {
@@ -78,9 +90,7 @@ class Router {
             }
             this.updateActiveNav('blog');
             if (anchorId) {
-                // Do an immediate scroll, then retry after images/videos load (layout shift).
-                setTimeout(() => scrollToHeading(anchorId, 'smooth'), 0);
-                setTimeout(() => scrollToHeading(anchorId, 'auto'), 400);
+                await scrollToAnchor('auto');
             } else {
                 window.scrollTo(0, 0);
             }
@@ -99,8 +109,7 @@ class Router {
                 }
                 this.updateActiveNav('baseball');
                 if (anchorId) {
-                    setTimeout(() => scrollToHeading(anchorId, 'smooth'), 0);
-                    setTimeout(() => scrollToHeading(anchorId, 'auto'), 400);
+                    await scrollToAnchor('auto');
                 } else {
                     window.scrollTo(0, 0);
                 }

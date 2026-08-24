@@ -144,8 +144,9 @@ export function extractHeadings(markdown: string): Heading[] {
     const lines = markdown.split('\n');
     
     for (const line of lines) {
+        const trimmedLine = line.replace(/\r$/, '');
         // Match markdown headings (## Heading or # Heading)
-        const match = line.match(/^(#{1,6})\s+(.+)$/);
+        const match = trimmedLine.match(/^(#{1,6})\s+(.+)$/);
         if (match) {
             const level = match[1].length;
             // Only include level 2 (##) headings in TOC
