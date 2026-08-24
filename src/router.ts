@@ -5,6 +5,7 @@ import { renderAboutPage } from './pages/about.js';
 import { renderArchivePage } from './pages/archive.js';
 import { BASEBALL_POST_BY_SLUG, renderBaseballPage } from './pages/baseball.js';
 import { isBaseballPostId } from './posts.js';
+import { isRouteAccessible } from './devSections.js';
 
 export interface Route {
     path: string;
@@ -52,6 +53,11 @@ class Router {
         const [routePath, queryString] = path.split('?');
         const params = new URLSearchParams(queryString ?? '');
         const anchorId = params.get('h');
+
+        if (!isRouteAccessible(routePath)) {
+            await this.navigate('home', updateHistory);
+            return;
+        }
 
         const scrollToHeading = (id: string, behavior: ScrollBehavior) => {
             const element = document.getElementById(id);

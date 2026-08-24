@@ -1,10 +1,11 @@
 // Main entry point for the personal website
 import { initTheme, toggleTheme } from './theme.js';
 import { router } from './router.js';
-import { loadMarkdown } from './markdown.js';
+import { initDevSections } from './devSections.js';
 
 // Initialize theme
 initTheme();
+initDevSections();
 
 // Theme toggle button
 const themeToggle = document.getElementById('theme-toggle');

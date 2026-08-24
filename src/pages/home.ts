@@ -189,9 +189,9 @@ export function renderHomePage(): void {
             <div class="about-me-container">
                 <div class="about-me-left">
                     <div class="section-content">
-                        <p>I'm a student from National Taiwan University, majoring in Computer Science and Information Engineering. Currently, I am an exchange student at the University of Illinois Urbana Champaign.</p>
+                        <p>I'm a student from National Taiwan University, majoring in Computer Science and Information Engineering. Currently, I am an exchange student at the University of Illinois at Urbana Champaign.</p>
                         <p><strong>Research Interests:</strong> Natural Language Processing, Artificial Intelligence, and Deep Learning.</p>
-                        <p><strong>Undergraduate Researcher @</strong> Natural Language Processing Lab, National Taiwan University; iDEA-iSAIL Lab, University of Illinois Urbana Champaign.</p>
+                        <p><strong>Undergraduate Researcher @</strong> Natural Language Processing Lab, National Taiwan University; iDEA-iSAIL Lab, University of Illinois at Urbana Champaign.</p>
                     </div>
                     <div class="social-links">
                 <a href="https://github.com/wcwutw" target="_blank" rel="noopener" aria-label="GitHub" class="social-link">
@@ -266,7 +266,7 @@ export function renderHomePage(): void {
                 <div class="news-list">
                     <div class="news-item">
                         <div class="news-date">Aug 15, 2026</div>
-                        <div>I am starting my exchange program at the Grainger College of Engineering, University of Illinois Urbana Champaign.</div>
+                        <div>I am starting my exchange program at the Grainger College of Engineering, University of Illinois at Urbana Champaign.</div>
                     </div>
                     <div class="news-item">
                         <div class="news-date">Jul 2, 2026</div>
