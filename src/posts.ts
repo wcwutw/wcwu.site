@@ -24,6 +24,7 @@ const BASEBALL_POST_FILES = [
     '23_2024_Phillies.md',
     '25_2026_Padres.md',
     '26_2026_Royals.md',
+    '27_2026_Cardinals.md',
 ];
 
 const ALL_POST_FILES = [...BLOG_INDEX_FILES, ...BASEBALL_POST_FILES];

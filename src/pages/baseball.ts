@@ -36,6 +36,7 @@ export const BASEBALL_POST_BY_SLUG: Record<string, string> = {
     phillies: '23_2024_Phillies',
     padres: '25_2026_Padres',
     royals: '26_2026_Royals',
+    cardinals: '27_2026_Cardinals',
 
     // KBO (still part of your Baseball section)
     // twins: '18_2025_KBOTwins',
@@ -58,6 +59,7 @@ const BASEBALL_PRIMARY_SLUG_BY_MLB_ID: Record<number, string> = {
     143: 'phillies',
     135: 'padres',
     118: 'royals',
+    138: 'cardinals',
 };
 
 /**
